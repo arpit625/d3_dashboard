@@ -10,7 +10,7 @@ $(document).ready(function() {
 	var svg_height = outer_height - margin.top - margin.bottom;
 
 	// The year to display
-	display_year = 1900;
+	display_year = 1950;
 
 	// define a function that filters data by year
 	function yearFilter(value){
@@ -78,7 +78,7 @@ $(document).ready(function() {
 	  	// Update the display of existing elelemnts to mathc new data
 	  	points
 		  	.transition()
-		  	.duration(1000)
+		  	.duration(300)
 			.ease(d3.easeBounce)
 	  		// .append("circle")
 		  	.attr("cx", function(d){
@@ -105,10 +105,6 @@ $(document).ready(function() {
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	.attr("r", 2)
-		  	.transition()
-		  	.duration(1000)
-			.ease(d3.easeBounce)
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population);
 		  	})
@@ -186,7 +182,7 @@ $(document).ready(function() {
 			setInterval(function() {
 				display_year = display_year + 1;
 				if(display_year > 2016){
-					display_year = 1900;
+					display_year = 1950;
 				}
 			  	generateVis();
 			}, 100);
