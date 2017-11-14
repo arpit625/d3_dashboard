@@ -5,7 +5,7 @@ $(document).ready(function() {
 		
 	//Width and height
 	var outer_width = 500;
-	var outer_height = 300;
+	var outer_height = 500;
 	var svg_width = outer_width - margin.left - margin.right;
 	var svg_height = outer_height - margin.top - margin.bottom;
 
@@ -13,7 +13,11 @@ $(document).ready(function() {
 	display_year = 2013;
 
 	// define a function that filters data by year
-
+	function yearFilter(value){
+		// console.log("Inside year filter")
+		// console.log(display_year)
+		return (value.Year == display_year)
+	}
 
 	//Create SVG element as a group with the margins transform applied to it
 	var svg = d3.select("body")
@@ -25,15 +29,13 @@ $(document).ready(function() {
 
 	// Create a scale to scale market share values nicely for bar heights
 	var yScale = d3.scaleLinear()
-		                     .domain([0, 50])
-		                     .range([svg_height, 0]);
+                     .range([svg_height, 0]);
+                     // .range([ 0, svg_height]);
 
 	// Create a scale object to nicely take care of positioning bars along the horizontal axis
 	// We don't set the domain yet as data isn't loaded
-	var xScale = d3.scaleBand()
-					.range([0, svg_width], 0.1)
-					.paddingInner(0.05)
-					.paddingOuter(0.05);
+	var xScale = d3.scaleLinear()
+					.range([0, svg_width]);
 				
 	//Define Y axis
 	var yAxis = d3.axisLeft()
@@ -42,86 +44,70 @@ $(document).ready(function() {
 
 	// Create an x-axis connected to the x scale
 	var xAxis = d3.axisBottom()
-				 .scale(xScale);
+				 .scale(xScale)
+				 .ticks(5);
 				  
-	// Call the y axis
-	svg.append("g")
-		.attr("class", "axis")
-		.attr("id", "y-axis")
-		.call(yAxis);
-			
-	// All but call the x-axis
-	svg.append("g")
-		.attr("class", "axis")
-		.attr("id", "x-axis")
-		.attr("transform", "translate(0," + svg_height + ")");
-	
-	function yearFilter(value){
-		return (value.Year == display_year)
-	}
+
 
 	// Define a fucntion to draw a simple bar chart
 	function generateVis(){
-			console.log("Inside viz")
 		// Filter the data to only include the current year
 		var filtered_datset = dataset.filter(yearFilter);
 			
-	 	/******** PERFORM DATA JOIN ************/
-	  	// Join new data with old elements, if any.
-	  	var bars = 	svg.selectAll("rect")
-		   .data(filtered_datset, function key(d) {
-									return d.Company;
-								});
+	   	/******** PERFORM DATA JOIN ************/
+	     	// Join new data with old elements, if any.
+	   	var points = svg.selectAll("circle")
+	   						.data(filtered_datset, function key(d) {
+	   							return d.LifeExp;
+	   						});
+	   						// .data(filtered_datset);
 
 	 	/******** HANDLE UPDATE SELECTION ************/
 	  	// Update the display of existing elelemnts to mathc new data
-	  	bars
-			.transition()
-			.duration(500)
+	  	points.append("circle")
+		  	.attr("cx", function(d){
+		  		return xScale(d.GDP);
+		  	})
+		  	.attr("cy", function(d){
+		  		return yScale(d.LifeExp);
+		  	})
+		  	.transition()
+		  	.duration(1000)
 			.ease(d3.easeBounce)
-			.attr("x", function(d) {
-		   		return xScale(d.Company);
-		   })
-		   .attr("y", function(d) {
-		   		return yScale(+d.Share) ;
-		   })
-		   .attr("width", xScale.bandwidth())
-		   .attr("height", function(d) {
-		   		return svg_height - yScale(+d.Share);
-		   })
-		   .style("fill", "Green");
+		  	.attr("r", 5)
+		  	.style("fill", "red");
 			   
 
 		/******** HANDLE ENTER SELECTION ************/
 	  	// Create new elements in the dataset
-	  	bars.enter()
-		   .append("rect")
-			.transition()
-			.duration(500)
+	  	// points
+	  	points.enter()
+		  	.append("circle")
+		  	.attr("cx", function(d){
+		  		return xScale(d.GDP);
+		  	})
+		  	.attr("cy", function(d){
+		  		return yScale(d.LifeExp);
+		  	})
+		  	.attr("r", 0)
+		  	.transition()
+		  	.duration(1000)
 			.ease(d3.easeBounce)
-		   .attr("x", function(d, i) {
-		   		return xScale(d.Company);
-		   })
-		   .attr("y", function(d) {
-		   		return yScale(+d.Share) ;
-		   })
-		   .attr("width", xScale.bandwidth())
-		   .attr("height", function(d) {
-		   		return svg_height - yScale(+d.Share);
-		   })
-		   .style("fill", "Blue");
+		  	.attr("r", 2)
+		  	.style("fill", "black");
+
 
 		/******** HANDLE EXIT SELECTION ************/
 		// Remove bars that not longer have a matching data eleement
-		bars.exit().remove();
+		points.exit().remove();
 	  		
 		// Set the year label
 		d3.select("#year_header").text("Year: " + display_year)
-
+		// console.log("end generate viz")
 	}
 
 	// Load the file data.csv and generate a visualisation based on it
-	d3.csv("./data/BroadbandMarketshare2013_2015.csv", function(error, data){
+	d3.csv("./data/test.csv", function(error, data){
 		
 		// handle any data loading errors
 		if(error){
@@ -132,14 +118,45 @@ $(document).ready(function() {
 			
 			// Assign  the data object loaded to the global dataset variable
 			dataset = data;
-			
-			// Update the domain of the x scale
-			xScale.domain(dataset.map(function(d) { return d.Company; }));
-			// Call the x-axis
-			svg.select("#x-axis").call(xAxis);
 
-			// Generate the visualisation
-			generateVis();
+			dataset.forEach(function(d){ 
+						d['Year'] = +d['Year'];
+						d['Population'] = +d['Population'];
+						d['LifeExp'] = +d['LifeExp'];
+						d['GDP'] = +d['GDP'];
+						d['Area'] = +d['Area'];
+						d['Coastline'] = +d['Coastline']; 
+					}); 
+
+
+			// Set the domains of the x and y scales using the data
+			var max_gdp = d3.max(dataset, function(d) { return d.GDP;} );
+			var max_lifeExp = d3.max(dataset, function(d) { return d.LifeExp;} );
+
+			xScale.domain([0, max_gdp]);
+			yScale.domain([0, max_lifeExp]);
+
+			// Create the x-axis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("id", "x-axis")
+				.attr("transform", "translate(0," + svg_height + ")")
+				.call(xAxis);
+				
+			// Create the y axis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("id", "y-axis")
+				.call(yAxis)
+				.append("text")
+				      .attr("transform", "rotate(-90)")
+				      .attr("y", 6)
+				      .attr("dy", ".71em")
+				      .style("text-anchor", "end")
+				      .text("Price ($)");
+
+		      // Generate the visualisation
+		      generateVis();
 
 			// Iterate through our avilable years.
 			setInterval(function() {
@@ -148,9 +165,8 @@ $(document).ready(function() {
 					display_year = 2013;
 				}
 			  	generateVis();
-			}, 4000);
+			}, 1000);
 		}
 	});
 });
-
 
