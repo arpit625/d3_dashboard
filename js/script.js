@@ -10,7 +10,7 @@ $(document).ready(function() {
 	var svg_height = outer_height - margin.top - margin.bottom;
 
 	// The year to display
-	display_year = 2013;
+	display_year = 1900;
 
 	// define a function that filters data by year
 	function yearFilter(value){
@@ -33,10 +33,14 @@ $(document).ready(function() {
 	// Create a scale object to nicely take care of positioning bars along the horizontal axis
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
-					.range([0, svg_width]);
+					// .range([0, svg_width]);
+					.rangeRound([0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500])
+					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
+
+	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
 
 	var populationScale = d3.scaleLinear()
-							.range([1,20]);
+							.range([1,30]);
 
 	//Define Y axis
 	var yAxis = d3.axisLeft()
@@ -46,7 +50,14 @@ $(document).ready(function() {
 	// Create an x-axis connected to the x scale
 	var xAxis = d3.axisBottom()
 				 .scale(xScale)
-				 .ticks(5);
+				 .ticks(5)
+				 .tickFormat(function (d) {
+				       if ((d / 1000) >= 1) {
+				         d = d / 1000 + "K";
+				       }
+				       return d;
+				     })
+				 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
 				  
 
 
@@ -68,6 +79,7 @@ $(document).ready(function() {
 	  	points
 		  	.transition()
 		  	.duration(1000)
+			.ease(d3.easeBounce)
 	  		// .append("circle")
 		  	.attr("cx", function(d){
 		  		return xScale(d.GDP);
@@ -75,8 +87,7 @@ $(document).ready(function() {
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	.attr("r", 0)
-			.ease(d3.easeBounce)
+		  	.attr("r", 2)
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population);
 		  	})
@@ -94,7 +105,7 @@ $(document).ready(function() {
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	.attr("r", 0)
+		  	.attr("r", 2)
 		  	.transition()
 		  	.duration(1000)
 			.ease(d3.easeBounce)
@@ -114,7 +125,8 @@ $(document).ready(function() {
 	}
 
 	// Load the file data.csv and generate a visualisation based on it
-	d3.csv("./data/test.csv", function(error, data){
+	// d3.csv("./data/test.csv", function(error, data){
+	d3.csv("./data/Gapminder_All_Time.csv", function(error, data){
 		
 		// handle any data loading errors
 		if(error){
@@ -142,8 +154,10 @@ $(document).ready(function() {
 			var max_population = d3.max(dataset, function(d) { return d.Population;} );
 			var min_population = d3.min(dataset, function(d) { return d.Population;} );
 
-			xScale.domain([0, max_gdp]);
-			yScale.domain([0, max_lifeExp]);
+			// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
+			// xScale.domain([0, max_gdp]);
+			// yScale.domain([0, max_lifeExp]);
+			yScale.domain([15, 90]);
 
 			populationScale.domain([min_population, max_population]);
 			// Create the x-axis
@@ -171,12 +185,13 @@ $(document).ready(function() {
 			// Iterate through our avilable years.
 			setInterval(function() {
 				display_year = display_year + 1;
-				if(display_year > 2015){
-					display_year = 2013;
+				if(display_year > 2016){
+					display_year = 1900;
 				}
 			  	generateVis();
-			}, 1000);
+			}, 100);
 		}
 	});
 });
+
 
