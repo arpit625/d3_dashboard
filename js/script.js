@@ -14,8 +14,6 @@ $(document).ready(function() {
 
 	// define a function that filters data by year
 	function yearFilter(value){
-		// console.log("Inside year filter")
-		// console.log(display_year)
 		return (value.Year == display_year)
 	}
 
@@ -36,7 +34,10 @@ $(document).ready(function() {
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
 					.range([0, svg_width]);
-				
+
+	var populationScale = d3.scaleLinear()
+							.range([1,20]);
+
 	//Define Y axis
 	var yAxis = d3.axisLeft()
 					  .scale(yScale)
@@ -58,23 +59,27 @@ $(document).ready(function() {
 	     	// Join new data with old elements, if any.
 	   	var points = svg.selectAll("circle")
 	   						.data(filtered_datset, function key(d) {
-	   							return d.LifeExp;
+	   							return d.Country;
 	   						});
 	   						// .data(filtered_datset);
 
 	 	/******** HANDLE UPDATE SELECTION ************/
 	  	// Update the display of existing elelemnts to mathc new data
-	  	points.append("circle")
+	  	points
+		  	.transition()
+		  	.duration(1000)
+	  		// .append("circle")
 		  	.attr("cx", function(d){
 		  		return xScale(d.GDP);
 		  	})
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	.transition()
-		  	.duration(1000)
+		  	.attr("r", 0)
 			.ease(d3.easeBounce)
-		  	.attr("r", 5)
+		  	.attr("r", function(d){
+		  		return populationScale(d.Population);
+		  	})
 		  	.style("fill", "red");
 			   
 
@@ -93,7 +98,9 @@ $(document).ready(function() {
 		  	.transition()
 		  	.duration(1000)
 			.ease(d3.easeBounce)
-		  	.attr("r", 2)
+		  	.attr("r", function(d){
+		  		return populationScale(d.Population);
+		  	})
 		  	.style("fill", "black");
 
 
@@ -132,10 +139,13 @@ $(document).ready(function() {
 			// Set the domains of the x and y scales using the data
 			var max_gdp = d3.max(dataset, function(d) { return d.GDP;} );
 			var max_lifeExp = d3.max(dataset, function(d) { return d.LifeExp;} );
+			var max_population = d3.max(dataset, function(d) { return d.Population;} );
+			var min_population = d3.min(dataset, function(d) { return d.Population;} );
 
 			xScale.domain([0, max_gdp]);
 			yScale.domain([0, max_lifeExp]);
 
+			populationScale.domain([min_population, max_population]);
 			// Create the x-axis
 			svg.append("g")
 				.attr("class", "axis")
