@@ -10,7 +10,7 @@ $(document).ready(function() {
 	var svg_height = outer_height - margin.top - margin.bottom;
 
 	// The year to display
-	display_year = 1950;
+	var display_year = 1950;
 
 	// define a function that filters data by year
 	function yearFilter(value){
@@ -178,15 +178,62 @@ $(document).ready(function() {
 		      // Generate the visualisation
 		      generateVis();
 
-			// Iterate through our avilable years.
-			setInterval(function() {
+			// Iterate through our varilable years.
+			/*var yearInterval = setInterval(function() {
 				display_year = display_year + 1;
-				if(display_year > 2016){
-					display_year = 1950;
+				if(display_year > 2015){
+					clearInterval(yearInterval);
 				}
 			  	generateVis();
-			}, 100);
+			}, 100);*/
 		}
+	});
+	$("#showData").click(function() {
+		display_year = $('#textYear').val();
+		display_year = +display_year;
+		//console.log(display_year);
+		generateVis();
+	});
+	$("#playPause").click(function() {
+		//console.log('click')
+		//var state = $("#playPause").text();console.log(state);
+		if($("#playPause").text() == "Play"){
+			console.log('play')
+			$("#playPause").text("Pause");
+			//console.log(display_year);
+			if(display_year > 2015)
+			{
+				display_year = 1950;
+				generateVis();
+				var yearInterval = setInterval(function() {
+					display_year = display_year + 1;
+					if(display_year > 2015){
+						$("#playPause").text("Play");
+						clearInterval(yearInterval);
+					}
+					generateVis();
+				}, 100);
+			}
+			else{
+				//console.log(display_year);
+				generateVis();
+				var yearInterval = setInterval(function() {
+					display_year = display_year + 1;
+					if(display_year > 2015){
+						$("#playPause").text("Play");
+						clearInterval(yearInterval);
+					}
+					generateVis();
+				}, 100);
+			}
+		}
+		else if( $("#playPause").text() == "Pause" ){
+			console.log('pause');
+			//console.log()
+			clearInterval(yearInterval);
+			//generateVis();
+		}
+		
 	});
 });
 
