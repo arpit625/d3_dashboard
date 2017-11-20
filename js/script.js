@@ -1,10 +1,10 @@
-
+var yearInterval = '';
 $(document).ready(function() {
 	// Define margins
 	var margin = {top: 10, right: 10, bottom: 25, left: 25};
 		
 	//Width and height
-	var outer_width = 500;
+	var outer_width = 900;
 	var outer_height = 500;
 	var svg_width = outer_width - margin.left - margin.right;
 	var svg_height = outer_height - margin.top - margin.bottom;
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
 					// .range([0, svg_width]);
-					.rangeRound([0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500])
+					.rangeRound([0, 90, 180, 270, 360, 450, 560, 630, 720, 810, 900])
 					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
 
 	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
@@ -87,9 +87,9 @@ $(document).ready(function() {
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	.attr("r", 2)
+		  	//.attr("r", 2)
 		  	.attr("r", function(d){
-		  		return populationScale(d.Population);
+		  		return populationScale(d.Population)*1.25;
 		  	})
 		  	.style("fill", "red");
 			   
@@ -190,22 +190,23 @@ $(document).ready(function() {
 	});
 	$("#showData").click(function() {
 		display_year = $('#textYear').val();
-		display_year = +display_year;
-		//console.log(display_year);
-		generateVis();
+		if(display_year != '' && (display_year > 1949 && display_year < 2017)){
+			display_year = +display_year;
+			generateVis();
+		}
+		else{
+			alert("Enter year between 1950 and 2016");
+		}
 	});
 	$("#playPause").click(function() {
-		//console.log('click')
-		//var state = $("#playPause").text();console.log(state);
 		if($("#playPause").text() == "Play"){
 			console.log('play')
 			$("#playPause").text("Pause");
-			//console.log(display_year);
-			if(display_year > 2015)
+			if(display_year < 1950 || display_year > 2015)
 			{
 				display_year = 1950;
 				generateVis();
-				var yearInterval = setInterval(function() {
+				yearInterval = setInterval(function() {
 					display_year = display_year + 1;
 					if(display_year > 2015){
 						$("#playPause").text("Play");
@@ -215,9 +216,8 @@ $(document).ready(function() {
 				}, 100);
 			}
 			else{
-				//console.log(display_year);
 				generateVis();
-				var yearInterval = setInterval(function() {
+				yearInterval = setInterval(function() {
 					display_year = display_year + 1;
 					if(display_year > 2015){
 						$("#playPause").text("Play");
@@ -228,10 +228,8 @@ $(document).ready(function() {
 			}
 		}
 		else if( $("#playPause").text() == "Pause" ){
-			console.log('pause');
-			//console.log()
-			clearInterval(yearInterval);
-			//generateVis();
+				$("#playPause").text("Play");
+				clearInterval(yearInterval);
 		}
 		
 	});
