@@ -22,6 +22,7 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", svg_width + margin.left + margin.right)
 				.attr("height", svg_height + margin.top + margin.bottom)
+				//.style("background",'grey')
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -132,6 +133,11 @@ $(document).ready(function() {
 	  		
 		// Set the year label
 		d3.select("#year_header").text("Year: " + display_year)
+		svg.append('text')
+			.attr("y",100)
+			.attr("x",200)
+			.style("text-anchor", "end")
+			.text(display_year);
 		// console.log("end generate viz")
 	}
 
