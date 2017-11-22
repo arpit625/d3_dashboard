@@ -18,7 +18,7 @@ $(document).ready(function() {
 	}
 
 	//Create SVG element as a group with the margins transform applied to it
-	var svg = d3.select("body")
+	var svg = d3.select("#mainCanvas")
 				.append("svg")
 				.attr("width", svg_width + margin.left + margin.right)
 				.attr("height", svg_height + margin.top + margin.bottom)
@@ -58,7 +58,9 @@ $(document).ready(function() {
 				       return d;
 				     })
 				 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
-				  
+	var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);			  
 
 
 	// Define a fucntion to draw a simple bar chart
@@ -108,6 +110,19 @@ $(document).ready(function() {
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population);
 		  	})
+			.on("mouseover", function(d) {		
+				div.transition()		
+					.duration(200)		
+					.style("opacity", .9);		
+				div.html(d.Country + "<br/>"+ "Ïncome:"+d.GDP+"<br/> Life Expectency:"+d.LifeExp)	
+					.style("left", (xScale(d.GDP)) + "px")		
+					.style("top", (yScale(d.LifeExp)) + "px");	
+            })
+			.on("mouseout", function(d) {		
+				div.transition()		
+					.duration(500)		
+					.style("opacity", 0);
+			})
 		  	.style("fill", "black");
 
 
