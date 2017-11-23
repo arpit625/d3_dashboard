@@ -1,4 +1,13 @@
 var yearInterval = '';
+var africaColor = '#00D5E9';
+var asiaColor = '#FF5872';
+var australiaColor = '#2E86C1';
+var cenAmeColor = '#16A085';
+var europeColor = '#E67E22';
+var norAmeColor = '#7E5109';
+var oceanicColor = '#922B21';
+var souAmeColor = '#A569BD';
+var colorFlag = 1;
 $(document).ready(function() {
 	// Define margins
 	var margin = {top: 10, right: 10, bottom: 25, left: 25};
@@ -22,7 +31,7 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", svg_width + margin.left + margin.right)
 				.attr("height", svg_height + margin.top + margin.bottom)
-				//.style("background",'grey')
+				.style("background",'#66737c')
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -94,7 +103,34 @@ $(document).ready(function() {
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population)*1.25;
 		  	})
-		  	.style("fill", "red");
+		  	.style("fill", function(d){
+				var region = d.Region;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+				
+			});
 			   
 
 		/******** HANDLE ENTER SELECTION ************/
@@ -124,7 +160,34 @@ $(document).ready(function() {
 					.duration(500)		
 					.style("opacity", 0);
 			})
-		  	.style("fill", "black");
+		  	.style("fill", function(d){
+				var region = d.Region;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+				
+			});
 
 
 		/******** HANDLE EXIT SELECTION ************/
@@ -254,6 +317,36 @@ $(document).ready(function() {
 		}
 		
 	});
+	$("#colorChange").click(function(){
+		colorBlind();
+	});
+	
+	function colorBlind(){console.log('change');
+		if(colorFlag == 0){console.log('no');
+			africaColor = '#00D5E9';
+			asiaColor = '#FF5872';
+			australiaColor = '#2E86C1';
+			cenAmeColor = '#16A085';
+			europeColor = '#E67E22';
+			norAmeColor = '#7E5109';
+			oceanicColor = '#922B21';
+			souAmeColor = '#A569BD';
+			colorFlag = 1;
+			generateVis();
+			$("#colorChange").text("Colorblind Eyes");
+		}
+		else{console.log('yes');
+			africaColor = '#66C2A5';
+			asiaColor = '#FC8D62';
+			australiaColor = '#8DA0CB';
+			cenAmeColor = '#E78AC3';
+			europeColor = '#A6D854';
+			norAmeColor = '#FFD92F';
+			oceanicColor = '#E5C494';
+			souAmeColor = '#B3B3B3';
+			colorFlag = 0;
+			generateVis();
+			$("#colorChange").text("Normal Eyes");
+		}
+	}
 });
-
-
