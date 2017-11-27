@@ -14,12 +14,9 @@ var yearIndex = 0;
 
 $(document).ready(function() {
 
-/*	for (var i=0; i<allYears.length; i++) {
-	            console.log(allYears[i]);
-	            //a b c
-	        }*/
-
-        // console.log(allYears);
+	/*########################################################################
+	########################### Scatter Plot ###############################
+	########################################################################*/
 
 	// Define margins
 	var margin = {top: 10, right: 10, bottom: 40, left: 25};
@@ -52,24 +49,6 @@ $(document).ready(function() {
 				.attr("transform", "translate(40,10)");
 				// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	//Create SVG element as a group with the margins transform applied to it
-	var svgRightOne = d3.select("#rightCanvasOne")
-				.append("svg")
-				.attr("width", 350)
-				.attr("height", 249)
-				//.style("background",'#66737c')
-				.append("g")
-				.attr("transform", "translate(110,10)");
-
-	//Create SVG element as a group with the margins transform applied to it
-	var svgRightTwo = d3.select("#rightCanvasTwo")
-				.append("svg")
-				.attr("width", 350)
-				.attr("height", 249)
-				//.style("background",'#66737c')
-				.append("g")
-				.attr("transform", "translate(110,10)");
-
 	// Create a scale to scale market share values nicely for bar heights
 	var yScale = d3.scaleLinear()
                      .range([svg_height, 0]);
@@ -79,9 +58,9 @@ $(document).ready(function() {
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
 					// .range([0, svg_width]);
-					.rangeRound([0, 90, 180, 270, 360, 450, 540, 630, 720, 810])
+					.rangeRound([0, 80, 160, 240, 320, 400, 480, 560, 640, 720, 800])
 					// .rangeRound([0, 100, 200, 300, 400, 500, 600, 700, 800, 900])
-					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
+					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
 
 	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
 
@@ -103,10 +82,76 @@ $(document).ready(function() {
 				       }
 				       return d;
 				     })
-				 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
+				 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
 	var div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
-    .style("opacity", 0);			  
+    .style("opacity", 0);	
+
+    /*########################################################################
+    ############################# Bar Chart 1 ###############################
+    ########################################################################*/
+
+    //Create SVG element as a group with the margins transform applied to it
+    var svgRightOne = d3.select("#rightCanvasOne")
+    			.append("svg")
+    			.attr("width", 350)
+    			.attr("height", 249)
+    			//.style("background",'#66737c')
+    			.append("g")
+    			.attr("transform", "translate(110,10)");
+
+	// Create a scale to scale market share values nicely for bar heights
+	var xScaleR1 = d3.scaleLinear()
+                     .domain([0, 55])
+                     .range([0, 220]);
+
+	// Create a scale object to nicely take care of positioning bars along the horizontal axis
+	var yScaleR1 = d3.scaleBand()
+					.range([200, 0]);
+      				// .domain(dataset.map(function(d) { return d.Region; }))
+
+	// Create an x-axis connected to the x scale
+	var xAxisR1 = d3.axisBottom()
+				  .scale(xScaleR1)
+				  .ticks(5);
+
+	//Define Y axis
+	var yAxisR1 = d3.axisLeft()
+					  .scale(yScaleR1);
+				  
+
+
+	/*########################################################################
+	############################# Bar Chart 2 ###############################
+	########################################################################*/
+
+    //Create SVG element as a group with the margins transform applied to it
+    var svgRightTwo = d3.select("#rightCanvasTwo")
+    			.append("svg")
+    			.attr("width", 350)
+    			.attr("height", 249)
+    			//.style("background",'#66737c')
+    			.append("g")
+    			.attr("transform", "translate(110,10)");		  
+
+	// Create a scale to scale market share values nicely for bar heights
+	var xScaleR2 = d3.scaleLinear()
+                     .domain([0, 130])
+                     .range([0, 220]);
+
+	// Create a scale object to nicely take care of positioning bars along the horizontal axis
+	var yScaleR2 = d3.scaleBand()
+					.range([200, 0]);
+      				// .domain(dataset.map(function(d) { return d.Government; }))
+
+	// Create an x-axis connected to the x scale
+	var xAxisR2 = d3.axisBottom()
+				  .scale(xScaleR2)
+				  .ticks(5);
+
+	//Define Y axis
+	var yAxisR2 = d3.axisLeft()
+					  .scale(yScaleR2);
 
 
 	// Define a fucntion to draw a simple bar chart
@@ -140,33 +185,7 @@ $(document).ready(function() {
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population)*1.25;
 		  	})
-			.style("stroke",function(d){
-				var region = d.Region;
-				if(region == "Africa"){
-					return africaColor;
-				}
-				else if(region == "Asia"){
-					return asiaColor;
-				}
-				else if(region == "Australia"){
-					return australiaColor;
-				}
-				else if(region == "Central America"){
-					return cenAmeColor;
-				}
-				else if(region == "Europe"){
-					return europeColor;
-				}
-				else if(region == "North America"){
-					return norAmeColor;
-				}
-				else if(region == "Oceanic"){
-					return oceanicColor;
-				}
-				else if(region == "South America"){
-					return souAmeColor;
-				}
-			})
+			.style("stroke",'black')
 		  	.style("fill", function(d){
 				var region = d.Region;
 				if(region == "Africa"){
@@ -224,33 +243,7 @@ $(document).ready(function() {
 					.duration(500)		
 					.style("opacity", 0);
 			})
-			.style("stroke",function(d){
-				var region = d.Region;
-				if(region == "Africa"){
-					return africaColor;
-				}
-				else if(region == "Asia"){
-					return asiaColor;
-				}
-				else if(region == "Australia"){
-					return australiaColor;
-				}
-				else if(region == "Central America"){
-					return cenAmeColor;
-				}
-				else if(region == "Europe"){
-					return europeColor;
-				}
-				else if(region == "North America"){
-					return norAmeColor;
-				}
-				else if(region == "Oceanic"){
-					return oceanicColor;
-				}
-				else if(region == "South America"){
-					return souAmeColor;
-				}
-			})
+			.style("stroke",'black')
 		  	.style("fill", function(d){
 				var region = d.Region;
 				if(region == "Africa"){
@@ -288,72 +281,12 @@ $(document).ready(function() {
 		// Set the year label
 		d3.select("#year_header").text("Year: " + display_year)
 		d3.select("#yearText").text(display_year)
-		/*svg.append('text')
-			.attr("y",100)
-			.attr("x",200)
-			.style("text-anchor", "end")
-			.text(display_year);*/
 
-		/*svg.append("text")
-		    .attr("transform", "rotate(-90)")
-		    .attr("y", -40)
-		    .attr("x",-250)
-		    .attr("dy", "1em")
-		    .style("text-anchor", "middle")
-		    .text("GDP");
-
-	    svg.append("text")
-	        .attr("y", 470)
-	        .attr("x",405)
-	        .attr("dy", "1em")
-	        .style("text-anchor", "middle")
-	        .text("Population");*/
-
-/*		svg.selectAll('text')
-			.data(dataset)
-			.enter()
-				.append('text')
-				.attr("y",100)
-				.attr("x",200)
-				.style("text-anchor", "end")
-				.text(display_year);*/
-
-		// console.log("end generate viz")
 		generateVisR1(filtered_datset);
 		generateVisR2(filtered_datset);
 	}
 
 	function generateVisR1(filtered_datset){
-
-		// Create a scale to scale market share values nicely for bar heights
-		var xScale = d3.scaleLinear()
-	                     .domain([0, 55])
-	                     .range([0, 220]);
-
-		// Create a scale object to nicely take care of positioning bars along the horizontal axis
-		var yScale = d3.scaleBand()
-          				.domain(dataset.map(function(d) { return d.Region; }))
-						.range([200, 0]);
-
-		// Create an x-axis connected to the x scale
-		var xAxis = d3.axisBottom()
-					  .scale(xScale)
-					  .ticks(5);
-
-		//Define Y axis
-		var yAxis = d3.axisLeft()
-						  .scale(yScale);
-					  
-		// Call the x-axis
-		svgRightOne.append("g")
-			.attr("class", "axis")
-			.attr("transform", "translate(0,200)")
-			.call(xAxis);
-			
-		// Call the y axis
-		svgRightOne.append("g")
-			.attr("class", "axis")
-			.call(yAxis);
 
 		var dataR1 = d3.nest()
 					  .key(function(d) { return d.Region;})
@@ -366,161 +299,81 @@ $(document).ready(function() {
 								return d.Region;
 							});
 
-		  // console.log(dataR1);
-		  // console.log(display_year);
-		  // console.log(plot);
-
-		     // Add rectangles
 	     plot
 	        .append("rect")
 	        .attr("x", 1)
-	        // .attr("x", function(d) {
-	        		// return xScale(d.value);
-	        // })
 	        .attr("y", function(d) {
-	        		return yScale(d.key) ;
+	        		return yScaleR1(d.key) ;
 	        })
-	        .attr("height", yScale.bandwidth()-2)
+	        .attr("height", yScaleR1.bandwidth()-2)
 	        .attr("width", function(d) {
-	        		return xScale(+d.value);
-	        		// return 220 - xScale(+d.value);
+	        		return xScaleR1(+d.value);
 	        })
 	        .attr("fill", "blue");
 
-		// Add rectangles
-		plot
-		   .enter()
-		   .append("rect")
-		   .attr("x", 1)
-		   .attr("y", function(d) {
-		   		return yScale(d.key) ;
-		   })
-		   .attr("height", yScale.bandwidth()-2)
-		   .attr("width", function(d) {
-		   		return xScale(+d.value);
-		   })
-		   .attr("fill", "blue");
-
-	   plot.exit().remove();
-
-	   	/*svgRightOne.append("text")
-	   	    .attr("transform", "rotate(-90)")
-	   	    .attr("y", -110)
-	   	    .attr("x",-100)
-	   	    .attr("dy", "1em")
-	   	    .style("text-anchor", "middle")
-	   	    .text("Region");
-
-       svgRightOne.append("text")
-           .attr("y", 215)
-           .attr("x",100)
-           .attr("dy", "1em")
-           .style("text-anchor", "middle")
-           .text("Countries");*/
-
-	}
-
-		function generateVisR2(filtered_datset){
-
-			// Create a scale to scale market share values nicely for bar heights
-			var xScale = d3.scaleLinear()
-		                     .domain([0, 130])
-		                     .range([0, 220]);
-
-			// Create a scale object to nicely take care of positioning bars along the horizontal axis
-			var yScale = d3.scaleBand()
-	          				.domain(dataset.map(function(d) { return d.Government; }))
-							.range([200, 0]);
-
-			// Create an x-axis connected to the x scale
-			var xAxis = d3.axisBottom()
-						  .scale(xScale)
-						  .ticks(5);
-
-			//Define Y axis
-			var yAxis = d3.axisLeft()
-							  .scale(yScale);
-						  
-			// Call the x-axis
-			svgRightTwo.append("g")
-				.attr("class", "axis")
-				.attr("transform", "translate(0,200)")
-				.call(xAxis);
-				
-			// Call the y axis
-			svgRightTwo.append("g")
-				.attr("class", "axis")
-				.call(yAxis);
-
-			var dataR1 = d3.nest()
-						  .key(function(d) { return d.Government;})
-						  .rollup(function(d) { 
-						   return d3.sum(d, function(g) {return 1; });
-						  }).entries(filtered_datset);
-
-			var plot = svgRightTwo.selectAll("rect")
-								.data(dataR1, function key(d) {
-									return d.Government;
-								});
-
-			  // console.log(dataR1);
-			  // console.log(display_year);
-			  // console.log(plot);
-
-			     // Add rectangles
-		     plot
-		        .append("rect")
-		        .attr("x", 1)
-		        // .attr("x", function(d) {
-		        		// return xScale(d.value);
-		        // })
-		        .attr("y", function(d) {
-		        		return yScale(d.key);
-		        })
-		        .attr("height", yScale.bandwidth()-2)
-		        .attr("width", function(d) {
-		        		return xScale(+d.value);
-		        		// return 220 - xScale(+d.value);
-		        })
-		        .attr("fill", "blue");
-
-			// Add rectangles
 			plot
 			   .enter()
 			   .append("rect")
 			   .attr("x", 1)
-		        .attr("y", function(d) {
-		        		return yScale(d.key);
-		        })
-			   .attr("height", yScale.bandwidth()-2)
+			   .attr("y", function(d) {
+			   		return yScaleR1(d.key) ;
+			   })
+			   .attr("height", yScaleR1.bandwidth()-2)
 			   .attr("width", function(d) {
-			   		return xScale(+d.value);
+			   		return xScaleR1(+d.value);
 			   })
 			   .attr("fill", "blue");
 
 		   plot.exit().remove();
 
-   	   	/*svgRightTwo.append("text")
-   	   	    .attr("transform", "rotate(-90)")
-   	   	    .attr("y", -115)
-   	   	    .attr("x",-100)
-   	   	    .attr("dy", "1em")
-   	   	    .style("text-anchor", "middle")
-   	   	    .text("Government");
+	}
 
-      svgRightTwo.append("text")
-          .attr("y", 215)
-          .attr("x",100)
-          .attr("dy", "1em")
-          .style("text-anchor", "middle")
-          .text("Countries");*/
+	function generateVisR2(filtered_datset){
 
-		}
+
+		var dataR1 = d3.nest()
+					  .key(function(d) { return d.Government;})
+					  .rollup(function(d) { 
+					   return d3.sum(d, function(g) {return 1; });
+					  }).entries(filtered_datset);
+
+		var plot = svgRightTwo.selectAll("rect")
+							.data(dataR1, function key(d) {
+								return d.Government;
+							});
+
+	     plot
+	        .append("rect")
+	        .attr("x", 1)
+	        .attr("y", function(d) {
+	        		return yScaleR2(d.key);
+	        })
+	        .attr("height", yScaleR2.bandwidth()-2)
+	        .attr("width", function(d) {
+	        		return xScaleR2(+d.value);
+	        })
+	        .attr("fill", "blue");
+
+			plot
+			   .enter()
+			   .append("rect")
+			   .attr("x", 1)
+		        .attr("y", function(d) {
+		        		return yScaleR2(d.key);
+		        })
+			   .attr("height", yScaleR2.bandwidth()-2)
+			   .attr("width", function(d) {
+			   		return xScaleR2(+d.value);
+			   })
+			   .attr("fill", "blue");
+
+		   plot.exit().remove();
+
+	}
 
 
 
 	// Load the file data.csv and generate a visualisation based on it
-	// d3.csv("./data/test.csv", function(error, data){
 	d3.csv("./data/Gapminder_All_Time.csv", function(error, data){
 		
 		// handle any data loading errors
@@ -549,10 +402,10 @@ $(document).ready(function() {
 			var max_population = d3.max(dataset, function(d) { return d.Population;} );
 			var min_population = d3.min(dataset, function(d) { return d.Population;} );
 
-			// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
-			// xScale.domain([0, max_gdp]);
-			// yScale.domain([0, max_lifeExp]);
 			yScale.domain([15, 90]);
+
+			yScaleR1.domain(dataset.map(function(d) { return d.Region; }))
+			yScaleR2.domain(dataset.map(function(d) { return d.Government; }))
 
 			populationScale.domain([min_population, max_population]);
 
@@ -562,6 +415,17 @@ $(document).ready(function() {
 			        .ticks(5)
 			}
 
+			/*			// add the X gridlines
+						svg.append("g")			
+						    .attr("class", "grid")
+						    .attr("transform", "translate(0," + svg_height + ")")
+						    .call(make_x_gridlines()
+						        .tickSize(-svg_height)
+						        .tickFormat("")
+						    )*/
+
+		    // ##################### Axis calls for Scatter Plot ##################################
+
 			// Create the x-axis
 			svg.append("g")
 				.attr("class", "grid")
@@ -569,27 +433,39 @@ $(document).ready(function() {
 				.attr("transform", "translate(0," + svg_height + ")")
 				.call(xAxis);
 
-/*			// add the X gridlines
-			svg.append("g")			
-			    .attr("class", "grid")
-			    .attr("transform", "translate(0," + svg_height + ")")
-			    .call(make_x_gridlines()
-			        .tickSize(-svg_height)
-			        .tickFormat("")
-			    )*/
-				
 			// Create the y axis
 			svg.append("g")
 				.attr("class", "grid")
 				.attr("id", "y-axis")
 				.call(yAxis);
 
-				// .append("text")
-				      // .attr("transform", "rotate(-90)")
-				      // .attr("y", 6)
-				      // .attr("dy", ".71em")
-				      // .style("text-anchor", "end")
-				      // .text("Price ($)");
+		    // ##################### Axis calls for Bar Chart 1 ##################################
+
+			// Call the x-axis
+			svgRightOne.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0,200)")
+				.call(xAxisR1);
+				
+			// Call the y axis
+			svgRightOne.append("g")
+				.attr("class", "axis")
+				.call(yAxisR1);
+
+		    // ##################### Axis calls for Bar Chart 1 ##################################
+		    
+			// Call the x-axis
+			svgRightTwo.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0,200)")
+				.call(xAxisR2);
+				
+			// Call the y axis
+			svgRightTwo.append("g")
+				.attr("class", "axis")
+				.call(yAxisR2);
+				
+
 
 		      // Generate the visualisation
 		      generateVis();
