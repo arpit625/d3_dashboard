@@ -47,7 +47,7 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", svg_width + margin.left + margin.right)
 				.attr("height", svg_height + margin.top + margin.bottom)
-				.style("background",'#66737c')
+				//.style("background",'#66737c')
 				.append("g")
 				.attr("transform", "translate(40,10)");
 				// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -57,7 +57,7 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", 350)
 				.attr("height", 249)
-				.style("background",'#66737c')
+				//.style("background",'#66737c')
 				.append("g")
 				.attr("transform", "translate(110,10)");
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", 350)
 				.attr("height", 249)
-				.style("background",'#66737c')
+				//.style("background",'#66737c')
 				.append("g")
 				.attr("transform", "translate(110,10)");
 
@@ -140,6 +140,33 @@ $(document).ready(function() {
 		  	.attr("r", function(d){
 		  		return populationScale(d.Population)*1.25;
 		  	})
+			.style("stroke",function(d){
+				var region = d.Region;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+			})
 		  	.style("fill", function(d){
 				var region = d.Region;
 				if(region == "Africa"){
@@ -197,6 +224,33 @@ $(document).ready(function() {
 					.duration(500)		
 					.style("opacity", 0);
 			})
+			.style("stroke",function(d){
+				var region = d.Region;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+			})
 		  	.style("fill", function(d){
 				var region = d.Region;
 				if(region == "Africa"){
@@ -233,14 +287,14 @@ $(document).ready(function() {
 	  		
 		// Set the year label
 		d3.select("#year_header").text("Year: " + display_year)
-
-		svg.append('text')
+		d3.select("#yearText").text(display_year)
+		/*svg.append('text')
 			.attr("y",100)
 			.attr("x",200)
 			.style("text-anchor", "end")
-			.text(display_year);
+			.text(display_year);*/
 
-		svg.append("text")
+		/*svg.append("text")
 		    .attr("transform", "rotate(-90)")
 		    .attr("y", -40)
 		    .attr("x",-250)
@@ -253,7 +307,7 @@ $(document).ready(function() {
 	        .attr("x",405)
 	        .attr("dy", "1em")
 	        .style("text-anchor", "middle")
-	        .text("Population");
+	        .text("Population");*/
 
 /*		svg.selectAll('text')
 			.data(dataset)
@@ -349,7 +403,7 @@ $(document).ready(function() {
 
 	   plot.exit().remove();
 
-	   	svgRightOne.append("text")
+	   	/*svgRightOne.append("text")
 	   	    .attr("transform", "rotate(-90)")
 	   	    .attr("y", -110)
 	   	    .attr("x",-100)
@@ -362,7 +416,7 @@ $(document).ready(function() {
            .attr("x",100)
            .attr("dy", "1em")
            .style("text-anchor", "middle")
-           .text("Countries");
+           .text("Countries");*/
 
 	}
 
@@ -446,7 +500,7 @@ $(document).ready(function() {
 
 		   plot.exit().remove();
 
-   	   	svgRightTwo.append("text")
+   	   	/*svgRightTwo.append("text")
    	   	    .attr("transform", "rotate(-90)")
    	   	    .attr("y", -115)
    	   	    .attr("x",-100)
@@ -459,7 +513,7 @@ $(document).ready(function() {
           .attr("x",100)
           .attr("dy", "1em")
           .style("text-anchor", "middle")
-          .text("Countries");
+          .text("Countries");*/
 
 		}
 

@@ -11,11 +11,18 @@ div.tooltip {
     pointer-events: none;			
 }
 #mainCanvasText{
+	opacity: 0.2;
 	position: absolute;
-	left: 100px;
-	top: 200px;
+	left: 540px;
+	top: 320px;
 	color:#000000;
-	z-index:-500;
+	z-index:1;
+}
+#yearText{
+	font-size:150px;
+}
+#year_header{
+	color:white;
 }
 #rightCanvasOne{
 	/*background-color:#fd7e14;*/
@@ -41,4 +48,52 @@ div.tooltip {
   /*stroke: lightgrey;*/
   stroke-opacity: 0.7;
   shape-rendering: crispEdges;
+}
+#yAxisText{
+	position: absolute;
+	left: -45px;
+	top: 290px;
+	transform: rotate(270deg);
+}
+#xAxisText{
+	position: absolute;
+	left: 365px;
+	top: 515px;
+}
+#yAxisText1{
+	position: absolute;
+	left: 940px;
+	top: 145px;
+	transform: rotate(270deg);
+}
+#xAxisText1{
+	position: absolute;
+	left: 1090px;
+	top: 268px;
+}
+#yAxisText2{
+	position: absolute;
+	left: 887px;
+	top: 395px;
+	transform: rotate(270deg);
+}
+#xAxisText2{
+	position: absolute;
+	left: 1090px;
+	top: 516px;
+}
+#showData{
+	position: relative;
+	left:205px;
+	top:-38px;
+}
+#playPause{
+	position: relative;
+	left:275px;
+	top:-76px;
+}
+#colorChange{
+	position: relative;
+	left:765px;
+	top:-114px;
 }
