@@ -310,7 +310,7 @@ $(document).ready(function() {
 	        .attr("y", function(d) {
 	        		return yScale(d.key) ;
 	        })
-	        .attr("height", yScale.bandwidth())
+	        .attr("height", yScale.bandwidth()-2)
 	        .attr("width", function(d) {
 	        		return xScale(+d.value);
 	        		// return 220 - xScale(+d.value);
@@ -325,7 +325,7 @@ $(document).ready(function() {
 		   .attr("y", function(d) {
 		   		return yScale(d.key) ;
 		   })
-		   .attr("height", yScale.bandwidth())
+		   .attr("height", yScale.bandwidth()-2)
 		   .attr("width", function(d) {
 		   		return xScale(+d.value);
 		   })
@@ -407,7 +407,7 @@ $(document).ready(function() {
 		        .attr("y", function(d) {
 		        		return yScale(d.key);
 		        })
-		        .attr("height", yScale.bandwidth())
+		        .attr("height", yScale.bandwidth()-2)
 		        .attr("width", function(d) {
 		        		return xScale(+d.value);
 		        		// return 220 - xScale(+d.value);
@@ -422,7 +422,7 @@ $(document).ready(function() {
 		        .attr("y", function(d) {
 		        		return yScale(d.key);
 		        })
-			   .attr("height", yScale.bandwidth())
+			   .attr("height", yScale.bandwidth()-2)
 			   .attr("width", function(d) {
 			   		return xScale(+d.value);
 			   })
