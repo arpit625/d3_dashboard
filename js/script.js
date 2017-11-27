@@ -611,19 +611,19 @@ $(document).ready(function() {
 		if(allYears.includes(display_var)){
 			// display_year = +display_year;
 			display_year = +display_var;
-			console.log("True case");
+			//console.log("True case");
 			yearIndex = allYears.indexOf(display_var);
 			// display_year = allYears.indexOf(display_var);
 			generateVis();
 		}
 		else{
-			console.log("False case");
+			//console.log("False case");
 			alert("Enter year between: 1910, 1920, 1930, 1940, 1950 and 2016");
 		}
 	});
 	$("#playPause").click(function() {
 		if($("#playPause").text() == "Play"){
-			console.log('play')
+			//console.log('play')
 			$("#playPause").text("Pause");
 			// if(display_year < 1950 || display_year > 2015)
 			if(yearIndex > 71)
@@ -673,8 +673,8 @@ $(document).ready(function() {
 		colorBlind();
 	});
 	
-	function colorBlind(){console.log('change');
-		if(colorFlag == 0){console.log('no');
+	function colorBlind(){//console.log('change');
+		if(colorFlag == 0){//console.log('no');
 			africaColor = '#00D5E9';
 			asiaColor = '#FF5872';
 			australiaColor = '#2E86C1';
@@ -687,7 +687,7 @@ $(document).ready(function() {
 			generateVis();
 			$("#colorChange").text("Colorblind Eyes");
 		}
-		else{console.log('yes');
+		else{//console.log('yes');
 			africaColor = '#66C2A5';
 			asiaColor = '#FC8D62';
 			australiaColor = '#8DA0CB';

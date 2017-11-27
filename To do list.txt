@@ -16,3 +16,7 @@ Arpit:
 - Year array 
 - Bar chart both
 - Legends
+
+Update
+-Color change for bar charts
+-axis marks append problem
