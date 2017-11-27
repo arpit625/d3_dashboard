@@ -10,7 +10,7 @@ var souAmeColor = '#A569BD';
 var colorFlag = 1;
 $(document).ready(function() {
 	// Define margins
-	var margin = {top: 10, right: 10, bottom: 25, left: 25};
+	var margin = {top: 10, right: 10, bottom: 40, left: 25};
 		
 	//Width and height
 	var outer_width = 900;
@@ -33,16 +33,26 @@ $(document).ready(function() {
 				.attr("height", svg_height + margin.top + margin.bottom)
 				.style("background",'#66737c')
 				.append("g")
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				.attr("transform", "translate(40,10)");
+				// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	//Create SVG element as a group with the margins transform applied to it
 	var svgRightOne = d3.select("#rightCanvasOne")
 				.append("svg")
 				.attr("width", 330)
-				.attr("height", 230)
+				.attr("height", 245)
 				.style("background",'#66737c')
 				.append("g")
-				.attr("transform", "translate(100,10)");
+				.attr("transform", "translate(105,10)");
+
+	//Create SVG element as a group with the margins transform applied to it
+	var svgRightTwo = d3.select("#rightCanvasTwo")
+				.append("svg")
+				.attr("width", 330)
+				.attr("height", 245)
+				.style("background",'#66737c')
+				.append("g")
+				.attr("transform", "translate(105,10)");
 
 	// Create a scale to scale market share values nicely for bar heights
 	var yScale = d3.scaleLinear()
@@ -53,7 +63,8 @@ $(document).ready(function() {
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
 					// .range([0, svg_width]);
-					.rangeRound([0, 90, 180, 270, 360, 450, 540, 630, 720, 810, 900])
+					.rangeRound([0, 90, 180, 270, 360, 450, 540, 630, 720, 810])
+					// .rangeRound([0, 100, 200, 300, 400, 500, 600, 700, 800, 900])
 					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]);
 
 	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
@@ -84,9 +95,6 @@ $(document).ready(function() {
 
 	// Define a fucntion to draw a simple bar chart
 	function generateVis(){
-
-		d3.select("#year_header").text("Year: ")
-		// d3.select("#year_header").text("Year: " + display_year)
 
 		// Filter the data to only include the current year
 		var filtered_datset = dataset.filter(yearFilter);
@@ -216,6 +224,21 @@ $(document).ready(function() {
 			.style("text-anchor", "end")
 			.text(display_year);
 
+		svg.append("text")
+		    .attr("transform", "rotate(-90)")
+		    .attr("y", -40)
+		    .attr("x",-250)
+		    .attr("dy", "1em")
+		    .style("text-anchor", "middle")
+		    .text("GDP");
+
+	    svg.append("text")
+	        .attr("y", 470)
+	        .attr("x",405)
+	        .attr("dy", "1em")
+	        .style("text-anchor", "middle")
+	        .text("Population");
+
 /*		svg.selectAll('text')
 			.data(dataset)
 			.enter()
@@ -227,6 +250,7 @@ $(document).ready(function() {
 
 		// console.log("end generate viz")
 		generateVisR1(filtered_datset);
+		generateVisR2(filtered_datset);
 	}
 
 	function generateVisR1(filtered_datset){
@@ -309,7 +333,119 @@ $(document).ready(function() {
 
 	   plot.exit().remove();
 
+	   	svgRightOne.append("text")
+	   	    .attr("transform", "rotate(-90)")
+	   	    .attr("y", -105)
+	   	    .attr("x",-100)
+	   	    .attr("dy", "1em")
+	   	    .style("text-anchor", "middle")
+	   	    .text("Region");
+
+       svgRightOne.append("text")
+           .attr("y", 215)
+           .attr("x",100)
+           .attr("dy", "1em")
+           .style("text-anchor", "middle")
+           .text("Countries");
+
 	}
+
+		function generateVisR2(filtered_datset){
+
+			// Create a scale to scale market share values nicely for bar heights
+			var xScale = d3.scaleLinear()
+		                     .domain([0, 130])
+		                     .range([0, 220]);
+
+			// Create a scale object to nicely take care of positioning bars along the horizontal axis
+			var yScale = d3.scaleBand()
+	          				.domain(dataset.map(function(d) { return d.Government; }))
+							.range([200, 0]);
+
+			// Create an x-axis connected to the x scale
+			var xAxis = d3.axisBottom()
+						  .scale(xScale)
+						  .ticks(5);
+
+			//Define Y axis
+			var yAxis = d3.axisLeft()
+							  .scale(yScale);
+						  
+			// Call the x-axis
+			svgRightTwo.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0,200)")
+				.call(xAxis);
+				
+			// Call the y axis
+			svgRightTwo.append("g")
+				.attr("class", "axis")
+				.call(yAxis);
+
+			var dataR1 = d3.nest()
+						  .key(function(d) { return d.Government;})
+						  .rollup(function(d) { 
+						   return d3.sum(d, function(g) {return 1; });
+						  }).entries(filtered_datset);
+
+			var plot = svgRightTwo.selectAll("rect")
+								.data(dataR1, function key(d) {
+									return d.Government;
+								});
+
+			  // console.log(dataR1);
+			  // console.log(display_year);
+			  // console.log(plot);
+
+			     // Add rectangles
+		     plot
+		        .append("rect")
+		        .attr("x", 1)
+		        // .attr("x", function(d) {
+		        		// return xScale(d.value);
+		        // })
+		        .attr("y", function(d) {
+		        		return yScale(d.key);
+		        })
+		        .attr("height", yScale.bandwidth())
+		        .attr("width", function(d) {
+		        		return xScale(+d.value);
+		        		// return 220 - xScale(+d.value);
+		        })
+		        .attr("fill", "blue");
+
+			// Add rectangles
+			plot
+			   .enter()
+			   .append("rect")
+			   .attr("x", 1)
+		        .attr("y", function(d) {
+		        		return yScale(d.key);
+		        })
+			   .attr("height", yScale.bandwidth())
+			   .attr("width", function(d) {
+			   		return xScale(+d.value);
+			   })
+			   .attr("fill", "blue");
+
+		   plot.exit().remove();
+
+   	   	svgRightTwo.append("text")
+   	   	    .attr("transform", "rotate(-90)")
+   	   	    .attr("y", -110)
+   	   	    .attr("x",-100)
+   	   	    .attr("dy", "1em")
+   	   	    .style("text-anchor", "middle")
+   	   	    .text("Government");
+
+      svgRightTwo.append("text")
+          .attr("y", 215)
+          .attr("x",100)
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Countries");
+
+		}
 
 
 

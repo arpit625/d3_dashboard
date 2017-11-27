@@ -10,6 +10,7 @@ Kush:
 - Year text in center of scatter plot
 - Bootstrap for asthetics
 - Color change for bar charts
+- Bubble Size
 
 Arpit:
 - Year array 
