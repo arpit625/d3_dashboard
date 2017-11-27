@@ -10,8 +10,15 @@ div.tooltip {
     border-radius: 8px;			
     pointer-events: none;			
 }
+#mainCanvasText{
+	position: absolute;
+	left: 100px;
+	top: 200px;
+	color:#000000;
+	z-index:-500;
+}
 #rightCanvasOne{
-	background-color:#fd7e14;
+	/*background-color:#fd7e14;*/
 	position: absolute;
 	left: 950px;
 	top: 41px;
@@ -19,14 +26,16 @@ div.tooltip {
 	width:350px;
 }
 #rightCanvasTwo{
-	background-color:#16A085;
+	/*background-color:#16A085;*/
 	position: absolute;
 	left: 950px;
 	top: 291px;
 	height:250px;
 	width:350px;
 }
-
+#textYear{
+	width:200px;
+}
 .grid line {
   stroke: black;
   /*stroke: lightgrey;*/
