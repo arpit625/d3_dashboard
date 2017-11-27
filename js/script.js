@@ -439,7 +439,7 @@ $(document).ready(function() {
 				.attr("class", "grid")
 				.attr("id", "x-axis")
 				.attr("transform", "translate(0," + svg_height + ")")
-				.style("stroke-dasharray", "5 5")
+				.style("stroke-dasharray", "2 2")
 				.call(make_x_axis()
 				    .tickSize(-svg_height, 0, 0)
 				    .tickFormat("")
@@ -457,7 +457,7 @@ $(document).ready(function() {
 			svg.append("g")
 				.attr("class", "grid")
 				.attr("id", "y-axis")
-				.style("stroke-dasharray", "5 5")
+				.style("stroke-dasharray", "2 2")
 				.call(make_y_axis()
 				    .tickSize(-svg_width, 0, 0)
 				    .tickFormat("-")
@@ -574,7 +574,7 @@ $(document).ready(function() {
 			souAmeColor = '#A569BD';
 			colorFlag = 1;
 			generateVis();
-			$("#colorChange").text("Colorblind Eyes");
+			$("#colorChange").text("Colorblind Friendly");
 		}
 		else{//console.log('yes');
 			africaColor = '#66C2A5';
@@ -587,7 +587,7 @@ $(document).ready(function() {
 			souAmeColor = '#B3B3B3';
 			colorFlag = 0;
 			generateVis();
-			$("#colorChange").text("Normal Eyes");
+			$("#colorChange").text("Normal Colors");
 		}
 	}
 });
