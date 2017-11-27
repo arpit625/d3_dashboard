@@ -558,6 +558,7 @@ $(document).ready(function() {
 			// display_year = +display_year;
 			display_year = +display_var;
 			console.log("True case");
+			yearIndex = allYears.indexOf(display_var);
 			// display_year = allYears.indexOf(display_var);
 			generateVis();
 		}
