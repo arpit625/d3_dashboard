@@ -118,6 +118,8 @@ $(document).ready(function() {
 	//Define Y axis
 	var yAxisR1 = d3.axisLeft()
 					  .scale(yScaleR1);
+
+	  // var colorScale = d3.scale.ordinal().range(['#00D5E9', '#FF5872', '#2E86C1', '#16A085', '#E67E22', '#7E5109', '#922B21', '#A569BD']);
 				  
 
 
@@ -310,6 +312,7 @@ $(document).ready(function() {
 	        		return xScaleR1(+d.value);
 	        })
 	        .attr("fill", "blue");
+	        // .attr("fill", function (d, i){ return colorScale(i); });
 
 			plot
 			   .enter()
@@ -323,6 +326,7 @@ $(document).ready(function() {
 			   		return xScaleR1(+d.value);
 			   })
 			   .attr("fill", "blue");
+			   // .attr("fill", function (d, i){ return colorScale(i); });
 
 		   plot.exit().remove();
 
@@ -371,8 +375,6 @@ $(document).ready(function() {
 
 	}
 
-
-
 	// Load the file data.csv and generate a visualisation based on it
 	d3.csv("./data/Gapminder_All_Time.csv", function(error, data){
 		
@@ -406,6 +408,8 @@ $(document).ready(function() {
 
 			yScaleR1.domain(dataset.map(function(d) { return d.Region; }))
 			yScaleR2.domain(dataset.map(function(d) { return d.Government; }))
+
+			// colorScale.domain(data.map(function (d){ return d['Region']; }));
 
 			populationScale.domain([min_population, max_population]);
 
@@ -453,7 +457,7 @@ $(document).ready(function() {
 				.call(yAxisR1);
 
 		    // ##################### Axis calls for Bar Chart 1 ##################################
-		    
+
 			// Call the x-axis
 			svgRightTwo.append("g")
 				.attr("class", "axis")
@@ -465,8 +469,6 @@ $(document).ready(function() {
 				.attr("class", "axis")
 				.call(yAxisR2);
 				
-
-
 		      // Generate the visualisation
 		      generateVis();
 
@@ -520,24 +522,8 @@ $(document).ready(function() {
 					}
 					generateVis();
 
-					if(yearIndex > 71){
-						yearIndex = 0;
-						display_year = allYears[yearIndex];
-					}
+				}, 100);
 
-				}, 100);
-			/*}
-			else{
-				generateVis();
-				yearInterval = setInterval(function() {
-					display_year = display_year + 1;
-					if(display_year > 2015){
-						$("#playPause").text("Play");
-						clearInterval(yearInterval);
-					}
-					generateVis();
-				}, 100);
-			}*/
 		}
 		else if( $("#playPause").text() == "Pause" ){
 				$("#playPause").text("Play");
