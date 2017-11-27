@@ -580,14 +580,20 @@ $(document).ready(function() {
 				generateVis();
 				yearInterval = setInterval(function() {
 					// display_year = display_year + 1;
-					yearIndex = yearIndex + 1;
 					display_year = allYears[yearIndex];
+					yearIndex = yearIndex + 1;
 					// if(display_year > 2015){
-					if(yearIndex > 70){
+					if(yearIndex > 71){
 						$("#playPause").text("Play");
 						clearInterval(yearInterval);
 					}
 					generateVis();
+
+					if(yearIndex > 71){
+						yearIndex = 0;
+						display_year = allYears[yearIndex];
+					}
+
 				}, 100);
 			/*}
 			else{
