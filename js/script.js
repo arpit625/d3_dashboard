@@ -39,20 +39,20 @@ $(document).ready(function() {
 	//Create SVG element as a group with the margins transform applied to it
 	var svgRightOne = d3.select("#rightCanvasOne")
 				.append("svg")
-				.attr("width", 330)
-				.attr("height", 245)
+				.attr("width", 350)
+				.attr("height", 249)
 				.style("background",'#66737c')
 				.append("g")
-				.attr("transform", "translate(105,10)");
+				.attr("transform", "translate(110,10)");
 
 	//Create SVG element as a group with the margins transform applied to it
 	var svgRightTwo = d3.select("#rightCanvasTwo")
 				.append("svg")
-				.attr("width", 330)
-				.attr("height", 245)
+				.attr("width", 350)
+				.attr("height", 249)
 				.style("background",'#66737c')
 				.append("g")
-				.attr("transform", "translate(105,10)");
+				.attr("transform", "translate(110,10)");
 
 	// Create a scale to scale market share values nicely for bar heights
 	var yScale = d3.scaleLinear()
@@ -335,7 +335,7 @@ $(document).ready(function() {
 
 	   	svgRightOne.append("text")
 	   	    .attr("transform", "rotate(-90)")
-	   	    .attr("y", -105)
+	   	    .attr("y", -110)
 	   	    .attr("x",-100)
 	   	    .attr("dy", "1em")
 	   	    .style("text-anchor", "middle")
@@ -432,7 +432,7 @@ $(document).ready(function() {
 
    	   	svgRightTwo.append("text")
    	   	    .attr("transform", "rotate(-90)")
-   	   	    .attr("y", -110)
+   	   	    .attr("y", -115)
    	   	    .attr("x",-100)
    	   	    .attr("dy", "1em")
    	   	    .style("text-anchor", "middle")
