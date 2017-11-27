@@ -1,0 +1,12 @@
+
+To do tasks: 
+
+- Add all years, including the one before 1950. Instead of Iterating one year at a time, loop through the array of existing years.
+- Add colors to the country as per the region
+- Show country name on mouse hover effect.
+- Display Year in the background with low opacity.
+
+
+- Add extra bars graphs on the right.
+
+

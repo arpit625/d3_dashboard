@@ -3,3 +3,15 @@
 -Show country name on mouse hover effect.
 -Display Year in the background with low opacity.
 -Add extra bar graphs on the right.
+
+
+# New Ones
+Kush:
+- Year text in center of scatter plot
+- Bootstrap for asthetics
+- Color change for bar charts
+
+Arpit:
+- Year array 
+- Bar chart both
+- Legends
