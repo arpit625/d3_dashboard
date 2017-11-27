@@ -44,8 +44,8 @@ div.tooltip {
 	width:200px;
 }
 .grid line {
-  stroke: black;
-  /*stroke: lightgrey;*/
+  /*stroke: black;*/
+  stroke: lightgrey;
   stroke-opacity: 0.7;
   shape-rendering: crispEdges;
 }

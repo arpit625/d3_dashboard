@@ -70,7 +70,8 @@ $(document).ready(function() {
 	//Define Y axis
 	var yAxis = d3.axisLeft()
 					  .scale(yScale)
-					  .ticks(5);
+					  .tickValues([20, 30, 40, 50, 60, 70, 80]);
+					  // .ticks(5);
 
 	// Create an x-axis connected to the x scale
 	var xAxis = d3.axisBottom()
@@ -86,6 +87,22 @@ $(document).ready(function() {
 	var div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0);	
+
+	  // function for the x grid lines
+	  function make_x_axis() {
+	      return d3.axisBottom()
+	          .scale(xScale)
+			 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
+	          // .ticks(5);
+	  }
+
+	  // function for the y grid lines
+	  function make_y_axis() {
+	    return d3.axisLeft()
+	        .scale(yScale)
+			.tickValues([20, 30, 40, 50, 60, 70, 80]);
+	        // .ticks(5);
+	  }
 
     /*########################################################################
     ############################# Bar Chart 1 ###############################
@@ -154,6 +171,8 @@ $(document).ready(function() {
 	//Define Y axis
 	var yAxisR2 = d3.axisLeft()
 					  .scale(yScaleR2);
+
+
 
 
 	// Define a fucntion to draw a simple bar chart
@@ -413,21 +432,6 @@ $(document).ready(function() {
 
 			populationScale.domain([min_population, max_population]);
 
-			// gridlines in x axis function
-			function make_x_gridlines() {		
-			    return d3.axisBottom(xAxis)
-			        .ticks(5)
-			}
-
-			/*			// add the X gridlines
-						svg.append("g")			
-						    .attr("class", "grid")
-						    .attr("transform", "translate(0," + svg_height + ")")
-						    .call(make_x_gridlines()
-						        .tickSize(-svg_height)
-						        .tickFormat("")
-						    )*/
-
 		    // ##################### Axis calls for Scatter Plot ##################################
 
 			// Create the x-axis
@@ -435,7 +439,30 @@ $(document).ready(function() {
 				.attr("class", "grid")
 				.attr("id", "x-axis")
 				.attr("transform", "translate(0," + svg_height + ")")
+				.style("stroke-dasharray", "5 5")
+				.call(make_x_axis()
+				    .tickSize(-svg_height, 0, 0)
+				    .tickFormat("")
+				)
+				// .call(xAxis);
+
+			// Create the x-axis
+			svg.append("g")
+				.attr("class", "grid")
+				.attr("id", "x-axis")
+				.attr("transform", "translate(0," + svg_height + ")")
 				.call(xAxis);
+
+			// Create the y axis
+			svg.append("g")
+				.attr("class", "grid")
+				.attr("id", "y-axis")
+				.style("stroke-dasharray", "5 5")
+				.call(make_y_axis()
+				    .tickSize(-svg_width, 0, 0)
+				    .tickFormat("-")
+				)
+				// .call(yAxis);
 
 			// Create the y axis
 			svg.append("g")
