@@ -8,7 +8,19 @@ var norAmeColor = '#7E5109';
 var oceanicColor = '#922B21';
 var souAmeColor = '#A569BD';
 var colorFlag = 1;
+
+var allYears = [1900, 1910, 1920, 1930, 1940, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
+var yearIndex = 0;
+
 $(document).ready(function() {
+
+/*	for (var i=0; i<allYears.length; i++) {
+	            console.log(allYears[i]);
+	            //a b c
+	        }*/
+
+        // console.log(allYears);
+
 	// Define margins
 	var margin = {top: 10, right: 10, bottom: 40, left: 25};
 		
@@ -19,7 +31,11 @@ $(document).ready(function() {
 	var svg_height = outer_height - margin.top - margin.bottom;
 
 	// The year to display
-	var display_year = 1950;
+	var display_year = allYears[0];
+
+	function isInArray(array, search) {
+	    return array.indexOf(search) >= 0;
+	}
 
 	// define a function that filters data by year
 	function yearFilter(value){
@@ -485,16 +501,32 @@ $(document).ready(function() {
 			yScale.domain([15, 90]);
 
 			populationScale.domain([min_population, max_population]);
+
+			// gridlines in x axis function
+			function make_x_gridlines() {		
+			    return d3.axisBottom(xAxis)
+			        .ticks(5)
+			}
+
 			// Create the x-axis
 			svg.append("g")
-				.attr("class", "axis")
+				.attr("class", "grid")
 				.attr("id", "x-axis")
 				.attr("transform", "translate(0," + svg_height + ")")
 				.call(xAxis);
+
+/*			// add the X gridlines
+			svg.append("g")			
+			    .attr("class", "grid")
+			    .attr("transform", "translate(0," + svg_height + ")")
+			    .call(make_x_gridlines()
+			        .tickSize(-svg_height)
+			        .tickFormat("")
+			    )*/
 				
 			// Create the y axis
 			svg.append("g")
-				.attr("class", "axis")
+				.attr("class", "grid")
 				.attr("id", "y-axis")
 				.call(yAxis);
 
@@ -519,27 +551,39 @@ $(document).ready(function() {
 		}
 	});
 	$("#showData").click(function() {
-		display_year = $('#textYear').val();
-		if(display_year != '' && (display_year > 1949 && display_year < 2017)){
-			display_year = +display_year;
+		display_var = $('#textYear').val();
+		display_var = parseInt(display_var);
+		// if(display_year != '' && (display_year > 1949 && display_year < 2017)){
+		if(allYears.includes(display_var)){
+			// display_year = +display_year;
+			display_year = +display_var;
+			console.log("True case");
+			// display_year = allYears.indexOf(display_var);
 			generateVis();
 		}
 		else{
-			alert("Enter year between 1950 and 2016");
+			console.log("False case");
+			alert("Enter year between: 1910, 1920, 1930, 1940, 1950 and 2016");
 		}
 	});
 	$("#playPause").click(function() {
 		if($("#playPause").text() == "Play"){
 			console.log('play')
 			$("#playPause").text("Pause");
-			if(display_year < 1950 || display_year > 2015)
+			// if(display_year < 1950 || display_year > 2015)
+			if(yearIndex > 71)
 			{
-				display_year = 1950;
+				// display_year = 1950;
+				yearIndex = 0;
+				display_year = allYears[yearIndex];
 			}
 				generateVis();
 				yearInterval = setInterval(function() {
-					display_year = display_year + 1;
-					if(display_year > 2015){
+					// display_year = display_year + 1;
+					yearIndex = yearIndex + 1;
+					display_year = allYears[yearIndex];
+					// if(display_year > 2015){
+					if(yearIndex > 70){
 						$("#playPause").text("Play");
 						clearInterval(yearInterval);
 					}

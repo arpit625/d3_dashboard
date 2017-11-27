@@ -26,3 +26,10 @@ div.tooltip {
 	height:250px;
 	width:350px;
 }
+
+.grid line {
+  stroke: black;
+  /*stroke: lightgrey;*/
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+}
