@@ -193,7 +193,7 @@ $(document).ready(function() {
 	  	// Update the display of existing elelemnts to mathc new data
 	  	points
 		  	.transition()
-		  	.duration(300)
+		  	.duration(500)
 			.ease(d3.easeBounce)
 	  		// .append("circle")
 		  	.attr("cx", function(d){
