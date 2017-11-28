@@ -1,3 +1,7 @@
+body{
+	margin-left:20px;
+	margin-right:20px;
+}
 div.tooltip {	
     position: absolute;			
     text-align: center;			
@@ -13,7 +17,7 @@ div.tooltip {
 #mainCanvasText{
 	opacity: 0.2;
 	position: absolute;
-	left: 540px;
+	left: 542px;
 	top: 320px;
 	color:#000000;
 	z-index:1;
@@ -51,7 +55,7 @@ div.tooltip {
 }
 #yAxisText{
 	position: absolute;
-	left: -45px;
+	left: -35px;
 	top: 290px;
 	transform: rotate(270deg);
 }

@@ -330,7 +330,35 @@ $(document).ready(function() {
 	        .attr("width", function(d) {
 	        		return xScaleR1(+d.value);
 	        })
-	        .attr("fill", "blue");
+			.style("fill", function(d){
+				var region = d.key;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+				
+			});
+	        //.attr("fill", "blue");
 	        // .attr("fill", function (d, i){ return colorScale(i); });
 
 			plot
@@ -344,7 +372,35 @@ $(document).ready(function() {
 			   .attr("width", function(d) {
 			   		return xScaleR1(+d.value);
 			   })
-			   .attr("fill", "blue");
+			   .style("fill", function(d){
+				var region = d.key;
+				if(region == "Africa"){
+					return africaColor;
+				}
+				else if(region == "Asia"){
+					return asiaColor;
+				}
+				else if(region == "Australia"){
+					return australiaColor;
+				}
+				else if(region == "Central America"){
+					return cenAmeColor;
+				}
+				else if(region == "Europe"){
+					return europeColor;
+				}
+				else if(region == "North America"){
+					return norAmeColor;
+				}
+				else if(region == "Oceanic"){
+					return oceanicColor;
+				}
+				else if(region == "South America"){
+					return souAmeColor;
+				}
+				
+			});
+			   //.attr("fill", "blue");
 			   // .attr("fill", function (d, i){ return colorScale(i); });
 
 		   plot.exit().remove();
@@ -375,7 +431,7 @@ $(document).ready(function() {
 	        .attr("width", function(d) {
 	        		return xScaleR2(+d.value);
 	        })
-	        .attr("fill", "blue");
+	        .style("fill", "#138496");
 
 			plot
 			   .enter()
@@ -388,7 +444,7 @@ $(document).ready(function() {
 			   .attr("width", function(d) {
 			   		return xScaleR2(+d.value);
 			   })
-			   .attr("fill", "blue");
+			   .style("fill", "#138496");
 
 		   plot.exit().remove();
 
