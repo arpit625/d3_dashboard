@@ -101,3 +101,9 @@ div.tooltip {
 	left:765px;
 	top:-114px;
 }
+#dropCountry{
+	position: relative;
+	width:400px;
+	left:200px;
+	top:200px;
+}

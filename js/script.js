@@ -1,6 +1,6 @@
 var yearInterval = '';
 var africaColor = '#00D5E9';
-var asiaColor = '#FF5872';
+var asiaColor = '#FC8D62';
 var australiaColor = '#2E86C1';
 var cenAmeColor = '#16A085';
 var europeColor = '#E67E22';
@@ -8,6 +8,7 @@ var norAmeColor = '#7E5109';
 var oceanicColor = '#922B21';
 var souAmeColor = '#A569BD';
 var colorFlag = 1;
+var countryList = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Greenland","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Latvia","Lebanon","Lesotho","Liberia","Libya","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Moldova","Mongolia","Montenegro","Morocco","Mozambique","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Romania","Russia","Rwanda","Samoa","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
 
 var allYears = [1900, 1910, 1920, 1930, 1940, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
 var yearIndex = 0;
@@ -469,7 +470,8 @@ $(document).ready(function() {
 						d['LifeExp'] = +d['LifeExp'];
 						d['GDP'] = +d['GDP'];
 						d['Area'] = +d['Area'];
-						d['Coastline'] = +d['Coastline']; 
+						d['Coastline'] = +d['Coastline'];
+						d['SNO'] = +d['SNO'];
 					}); 
 
 
@@ -483,6 +485,8 @@ $(document).ready(function() {
 
 			yScaleR1.domain(dataset.map(function(d) { return d.Region; }))
 			yScaleR2.domain(dataset.map(function(d) { return d.Government; }))
+			//var countryList = dataset.map(function(d) { return d.Country; })
+			//countryList = jQuery.unique(countryList);
 
 			// colorScale.domain(data.map(function (d){ return d['Region']; }));
 
@@ -563,6 +567,15 @@ $(document).ready(function() {
 				}
 			  	generateVis();
 			}, 100);*/
+			var countryOption = '';
+			/*$.each(function(){
+				countryOption += '<option value = "'++'">'++'</option>'
+				//$('#countryDrop').append(countryOption);
+			});*/
+			for (var i=0;i<countryList.length;i++){
+				countryOption += '<option value="'+countryList[i]+'">' +countryList[i]+'</option>';
+			}
+			$('#countryDrop').append(countryOption);
 		}
 	});
 	$("#showData").click(function() {
@@ -621,7 +634,7 @@ $(document).ready(function() {
 	function colorBlind(){//console.log('change');
 		if(colorFlag == 0){//console.log('no');
 			africaColor = '#00D5E9';
-			asiaColor = '#FF5872';
+			asiaColor = '#FC8D62';
 			australiaColor = '#2E86C1';
 			cenAmeColor = '#16A085';
 			europeColor = '#E67E22';
@@ -645,5 +658,15 @@ $(document).ready(function() {
 			generateVis();
 			$("#colorChange").text("Normal Colors");
 		}
+	}
+	$("#countryDrop").change(function(){
+		var countryVal = $("#countryDrop").val();
+		console.log(countryVal);
+		changeCountryGenerateVis(countryVal);
+	});
+	
+	function changeCountryGenerateVis(countryName){
+		
+	  		
 	}
 });
