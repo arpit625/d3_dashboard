@@ -5,18 +5,13 @@
 -Add extra bar graphs on the right.
 
 
-# New Ones
-Kush:
+# Done
 - Year text in center of scatter plot
 - Bootstrap for asthetics
 - Color change for bar charts
 - Bubble Size
-
-Arpit:
 - Year array 
 - Bar chart both
 - Legends
-
-Update
 -Color change for bar charts
 -axis marks append problem
