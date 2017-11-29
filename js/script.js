@@ -1,4 +1,5 @@
 var yearInterval = '';
+var countryVal = '';
 var africaColor = '#00D5E9';
 var asiaColor = '#FC8D62';
 var australiaColor = '#2E86C1';
@@ -38,6 +39,10 @@ $(document).ready(function() {
 	// define a function that filters data by year
 	function yearFilter(value){
 		return (value.Year == display_year)
+	}
+
+	function countryFilter(value){
+		return (value.Country == countryVal)
 	}
 
 	//Create SVG element as a group with the margins transform applied to it
@@ -184,7 +189,7 @@ $(document).ready(function() {
 			
 	   	/******** PERFORM DATA JOIN ************/
 	     	// Join new data with old elements, if any.
-	   	var points = svg.selectAll("circle")
+	   	points = svg.selectAll("circle")
 	   						.data(filtered_datset, function key(d) {
 	   							return d.Country;
 	   						});
@@ -306,6 +311,38 @@ $(document).ready(function() {
 
 		generateVisR1(filtered_datset);
 		generateVisR2(filtered_datset);
+
+		
+
+	}
+
+	function changeCountryGenerateVis(countryName){
+
+		if (countryVal != '') {
+			// console.log("Value is not null");
+			// points.remove();
+			svg.selectAll("circle").remove();
+			// countryTrace.remove();
+
+			var filtered_data_country = dataset.filter(countryFilter);
+
+			var countryTrace = svg.selectAll("circle")
+								.data(filtered_data_country);
+
+			countryTrace.enter()
+				.append("circle")
+				.attr("cx", function(d){
+					return xScale(d.GDP);
+				})
+				.attr("cy", function(d){
+					return yScale(d.LifeExp);
+				})
+				.attr("r", function(d){
+					return populationScale(d.Population);
+				})
+				.style("stroke",'black')
+				.style("fill", 'green');
+		}	  		
 	}
 
 	function generateVisR1(filtered_datset){
@@ -660,13 +697,9 @@ $(document).ready(function() {
 		}
 	}
 	$("#countryDrop").change(function(){
-		var countryVal = $("#countryDrop").val();
+		countryVal = $("#countryDrop").val();
 		console.log(countryVal);
 		changeCountryGenerateVis(countryVal);
 	});
 	
-	function changeCountryGenerateVis(countryName){
-		
-	  		
-	}
 });
