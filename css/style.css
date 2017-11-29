@@ -104,6 +104,14 @@ div.tooltip {
 #dropCountry{
 	position: absolute;
 	width:400px;
-	left:375px;
-	top:548px;
+	left:20px;
+	top:587px;
+}
+#countryDrop{
+	width:157px;
+	padding-bottom:5px;
+}
+#clearButton{
+	height:30px;
+	padding-top:1px;
 }

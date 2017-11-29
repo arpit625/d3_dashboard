@@ -318,7 +318,7 @@ $(document).ready(function() {
 
 	function changeCountryGenerateVis(countryName){
 
-		if (countryVal != '') {
+		if (countryVal != 'All') {
 			// console.log("Value is not null");
 			// points.remove();
 			svg.selectAll("circle").remove();
@@ -341,8 +341,11 @@ $(document).ready(function() {
 					return populationScale(d.Population);
 				})
 				.style("stroke",'black')
-				.style("fill", 'green');
-		}	  		
+				.style("fill", '#16A085');
+		}
+		else{
+			generateVis();
+		}		
 	}
 
 	function generateVisR1(filtered_datset){
@@ -701,5 +704,8 @@ $(document).ready(function() {
 		console.log(countryVal);
 		changeCountryGenerateVis(countryVal);
 	});
-	
+	$("#clearButton").click(function(){
+		$("#countryDrop option[value='All']").prop('selected', true);
+		generateVis();
+	});
 });
