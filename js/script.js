@@ -340,7 +340,8 @@ $(document).ready(function() {
 					return yScale(d.LifeExp);
 				})
 				.attr("r", function(d){
-					return populationScale(d.Population);
+					// return populationScale(d.Population);
+			  		return populationScale(Math.sqrt(d.Population/Math.PI));
 				})
 				.style("stroke",'black')
 				.style("fill", '#16A085');
