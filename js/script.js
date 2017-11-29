@@ -1,7 +1,7 @@
 var yearInterval = '';
 var countryVal = '';
 var africaColor = '#00D5E9';
-var asiaColor = '#FC8D62';
+var asiaColor = '#FF5872';
 var australiaColor = '#2E86C1';
 var cenAmeColor = '#16A085';
 var europeColor = '#E67E22';
@@ -362,7 +362,6 @@ $(document).ready(function() {
 							});
 
 	     plot
-	        .append("rect")
 	        .attr("x", 1)
 	        .attr("y", function(d) {
 	        		return yScaleR1(d.key) ;
@@ -674,7 +673,7 @@ $(document).ready(function() {
 	function colorBlind(){//console.log('change');
 		if(colorFlag == 0){//console.log('no');
 			africaColor = '#00D5E9';
-			asiaColor = '#FC8D62';
+			asiaColor = '#FF5872';
 			australiaColor = '#2E86C1';
 			cenAmeColor = '#16A085';
 			europeColor = '#E67E22';
