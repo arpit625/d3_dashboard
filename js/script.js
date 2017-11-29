@@ -71,7 +71,7 @@ $(document).ready(function() {
 	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
 
 	var populationScale = d3.scaleLinear()
-							.range([1,25]);
+							.range([1,35]);
 
 	//Define Y axis
 	var yAxis = d3.axisLeft()
@@ -210,7 +210,8 @@ $(document).ready(function() {
 		  	})
 		  	//.attr("r", 2)
 		  	.attr("r", function(d){
-		  		return populationScale(d.Population)*1.25;
+		  		// return populationScale(d.Population)*1.25;
+		  		return populationScale(Math.sqrt(d.Population/Math.PI));
 		  	})
 			.style("stroke",'black')
 		  	.style("fill", function(d){
@@ -255,7 +256,8 @@ $(document).ready(function() {
 		  		return yScale(d.LifeExp);
 		  	})
 		  	.attr("r", function(d){
-		  		return populationScale(d.Population);
+		  		// return populationScale(d.Population);
+		  		return populationScale(Math.sqrt(d.Population/Math.PI));
 		  	})
 			.on("mouseover", function(d) {		
 				div.transition()		
@@ -529,7 +531,10 @@ $(document).ready(function() {
 
 			// colorScale.domain(data.map(function (d){ return d['Region']; }));
 
-			populationScale.domain([min_population, max_population]);
+			// populationScale.domain([min_population, max_population]);
+			populationScale.domain([0,Math.sqrt((d3.max(dataset, function(d)
+					{ return +d.Population})
+				)/Math.PI)]);
 
 		    // ##################### Axis calls for Scatter Plot ##################################
 
