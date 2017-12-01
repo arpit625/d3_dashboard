@@ -29,7 +29,6 @@ div.tooltip {
 	color:white;
 }
 #rightCanvasOne{
-	/*background-color:#fd7e14;*/
 	position: absolute;
 	left: 950px;
 	top: 41px;
@@ -37,7 +36,6 @@ div.tooltip {
 	width:350px;
 }
 #rightCanvasTwo{
-	/*background-color:#16A085;*/
 	position: absolute;
 	left: 950px;
 	top: 291px;
@@ -48,7 +46,6 @@ div.tooltip {
 	width:200px;
 }
 .grid line {
-  /*stroke: black;*/
   stroke: lightgrey;
   stroke-opacity: 0.7;
   shape-rendering: crispEdges;

@@ -1,3 +1,4 @@
+/*variable declaration*/
 var yearInterval = '';
 var countryVal = '';
 var africaColor = '#00D5E9';
@@ -13,7 +14,7 @@ var countryList = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua
 
 var allYears = [1900, 1910, 1920, 1930, 1940, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
 var yearIndex = 0;
-
+/*ready function*/
 $(document).ready(function() {
 
 	/*########################################################################
@@ -50,25 +51,19 @@ $(document).ready(function() {
 				.append("svg")
 				.attr("width", svg_width + margin.left + margin.right)
 				.attr("height", svg_height + margin.top + margin.bottom)
-				//.style("background",'#66737c')
 				.append("g")
 				.attr("transform", "translate(40,10)");
-				// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	// Create a scale to scale market share values nicely for bar heights
+	// Create a scale to scale market share values nicely for height
 	var yScale = d3.scaleLinear()
                      .range([svg_height, 0]);
-                     // .range([ 0, svg_height]);
 
-	// Create a scale object to nicely take care of positioning bars along the horizontal axis
+	// Create a scale object to nicely take care of positioning along the horizontal axis
 	// We don't set the domain yet as data isn't loaded
 	var xScale = d3.scaleLinear()
-					// .range([0, svg_width]);
 					.rangeRound([0, 80, 160, 240, 320, 400, 480, 560, 640, 720, 800])
-					// .rangeRound([0, 100, 200, 300, 400, 500, 600, 700, 800, 900])
 					.domain([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
 
-	// xScale.domain([0, 500, 1000, 5000, 20000, 50000,100000]);
 
 	var populationScale = d3.scaleLinear()
 							.range([1,35]);
@@ -77,7 +72,6 @@ $(document).ready(function() {
 	var yAxis = d3.axisLeft()
 					  .scale(yScale)
 					  .tickValues([20, 30, 40, 50, 60, 70, 80]);
-					  // .ticks(5);
 
 	// Create an x-axis connected to the x scale
 	var xAxis = d3.axisBottom()
@@ -90,6 +84,7 @@ $(document).ready(function() {
 				       return d;
 				     })
 				 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
+	/**********tool tip div on mouse over***********/			 
 	var div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0);	
@@ -99,7 +94,6 @@ $(document).ready(function() {
 	      return d3.axisBottom()
 	          .scale(xScale)
 			 .tickValues([0, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000]);
-	          // .ticks(5);
 	  }
 
 	  // function for the y grid lines
@@ -107,7 +101,6 @@ $(document).ready(function() {
 	    return d3.axisLeft()
 	        .scale(yScale)
 			.tickValues([20, 30, 40, 50, 60, 70, 80]);
-	        // .ticks(5);
 	  }
 
     /*########################################################################
@@ -119,19 +112,17 @@ $(document).ready(function() {
     			.append("svg")
     			.attr("width", 350)
     			.attr("height", 249)
-    			//.style("background",'#66737c')
     			.append("g")
     			.attr("transform", "translate(110,10)");
 
-	// Create a scale to scale market share values nicely for bar heights
+	// Create a scale to scale market share values nicely for heights
 	var xScaleR1 = d3.scaleLinear()
                      .domain([0, 55])
                      .range([0, 220]);
 
-	// Create a scale object to nicely take care of positioning bars along the horizontal axis
+	// Create a scale object to nicely take care of positioning along the horizontal axis
 	var yScaleR1 = d3.scaleBand()
 					.range([200, 0]);
-      				// .domain(dataset.map(function(d) { return d.Region; }))
 
 	// Create an x-axis connected to the x scale
 	var xAxisR1 = d3.axisBottom()
@@ -142,7 +133,6 @@ $(document).ready(function() {
 	var yAxisR1 = d3.axisLeft()
 					  .scale(yScaleR1);
 
-	  // var colorScale = d3.scale.ordinal().range(['#00D5E9', '#FF5872', '#2E86C1', '#16A085', '#E67E22', '#7E5109', '#922B21', '#A569BD']);
 				  
 
 
@@ -155,19 +145,17 @@ $(document).ready(function() {
     			.append("svg")
     			.attr("width", 350)
     			.attr("height", 249)
-    			//.style("background",'#66737c')
     			.append("g")
     			.attr("transform", "translate(110,10)");		  
 
-	// Create a scale to scale market share values nicely for bar heights
+	// Create a scale to scale market share values nicely for height
 	var xScaleR2 = d3.scaleLinear()
                      .domain([0, 130])
                      .range([0, 220]);
 
-	// Create a scale object to nicely take care of positioning bars along the horizontal axis
+	// Create a scale object to nicely take care of positioning along the horizontal axis
 	var yScaleR2 = d3.scaleBand()
 					.range([200, 0]);
-      				// .domain(dataset.map(function(d) { return d.Government; }))
 
 	// Create an x-axis connected to the x scale
 	var xAxisR2 = d3.axisBottom()
@@ -181,7 +169,7 @@ $(document).ready(function() {
 
 
 
-	// Define a fucntion to draw a simple bar chart
+	// Define a fucntion to draw a simple scatter plot
 	function generateVis(){
 
 		// Filter the data to only include the current year
@@ -193,7 +181,6 @@ $(document).ready(function() {
 	   						.data(filtered_datset, function key(d) {
 	   							return d.Country;
 	   						});
-	   						// .data(filtered_datset);
 
 	 	/******** HANDLE UPDATE SELECTION ************/
 	  	// Update the display of existing elelemnts to mathc new data
@@ -201,16 +188,13 @@ $(document).ready(function() {
 		  	.transition()
 		  	.duration(500)
 			.ease(d3.easeBounce)
-	  		// .append("circle")
 		  	.attr("cx", function(d){
 		  		return xScale(d.GDP);
 		  	})
 		  	.attr("cy", function(d){
 		  		return yScale(d.LifeExp);
 		  	})
-		  	//.attr("r", 2)
 		  	.attr("r", function(d){
-		  		// return populationScale(d.Population)*1.25;
 		  		return populationScale(Math.sqrt(d.Population/Math.PI));
 		  	})
 			.style("stroke",'black')
@@ -256,7 +240,6 @@ $(document).ready(function() {
 		  		return yScale(d.LifeExp);
 		  	})
 		  	.attr("r", function(d){
-		  		// return populationScale(d.Population);
 		  		return populationScale(Math.sqrt(d.Population/Math.PI));
 		  	})
 			.on("mouseover", function(d) {		
@@ -304,7 +287,7 @@ $(document).ready(function() {
 
 
 		/******** HANDLE EXIT SELECTION ************/
-		// Remove bars that not longer have a matching data eleement
+		// Remove bubbles that not longer have a matching data element
 		points.exit().remove();
 	  		
 		// Set the year label
@@ -321,10 +304,7 @@ $(document).ready(function() {
 	function changeCountryGenerateVis(countryName){
 
 		if (countryVal != 'All') {
-			// console.log("Value is not null");
-			// points.remove();
 			svg.selectAll("circle").remove();
-			// countryTrace.remove();
 
 			var filtered_data_country = dataset.filter(countryFilter);
 
@@ -340,7 +320,6 @@ $(document).ready(function() {
 					return yScale(d.LifeExp);
 				})
 				.attr("r", function(d){
-					// return populationScale(d.Population);
 			  		return populationScale(Math.sqrt(d.Population/Math.PI));
 				})
 				.style("stroke",'black')
@@ -401,8 +380,6 @@ $(document).ready(function() {
 				}
 				
 			});
-	        //.attr("fill", "blue");
-	        // .attr("fill", function (d, i){ return colorScale(i); });
 
 			plot
 			   .enter()
@@ -443,8 +420,6 @@ $(document).ready(function() {
 				}
 				
 			});
-			   //.attr("fill", "blue");
-			   // .attr("fill", function (d, i){ return colorScale(i); });
 
 		   plot.exit().remove();
 
@@ -501,7 +476,6 @@ $(document).ready(function() {
 			console.log("Something went wrong");
 			console.log(error);
 		}else{
-			console.log("Data Loaded");
 			
 			// Assign  the data object loaded to the global dataset variable
 			dataset = data;
@@ -527,12 +501,7 @@ $(document).ready(function() {
 
 			yScaleR1.domain(dataset.map(function(d) { return d.Region; }))
 			yScaleR2.domain(dataset.map(function(d) { return d.Government; }))
-			//var countryList = dataset.map(function(d) { return d.Country; })
-			//countryList = jQuery.unique(countryList);
-
-			// colorScale.domain(data.map(function (d){ return d['Region']; }));
-
-			// populationScale.domain([min_population, max_population]);
+			
 			populationScale.domain([0,Math.sqrt((d3.max(dataset, function(d)
 					{ return +d.Population})
 				)/Math.PI)]);
@@ -549,7 +518,6 @@ $(document).ready(function() {
 				    .tickSize(-svg_height, 0, 0)
 				    .tickFormat("")
 				)
-				// .call(xAxis);
 
 			// Create the x-axis
 			svg.append("g")
@@ -567,7 +535,6 @@ $(document).ready(function() {
 				    .tickSize(-svg_width, 0, 0)
 				    .tickFormat("-")
 				)
-				// .call(yAxis);
 
 			// Create the y axis
 			svg.append("g")
@@ -604,59 +571,42 @@ $(document).ready(function() {
 		      // Generate the visualisation
 		      generateVis();
 
-			// Iterate through our varilable years.
-			/*var yearInterval = setInterval(function() {
-				display_year = display_year + 1;
-				if(display_year > 2015){
-					clearInterval(yearInterval);
-				}
-			  	generateVis();
-			}, 100);*/
+			/*Select dropodown fill*/
 			var countryOption = '';
-			/*$.each(function(){
-				countryOption += '<option value = "'++'">'++'</option>'
-				//$('#countryDrop').append(countryOption);
-			});*/
 			for (var i=0;i<countryList.length;i++){
 				countryOption += '<option value="'+countryList[i]+'">' +countryList[i]+'</option>';
 			}
 			$('#countryDrop').append(countryOption);
 		}
-	});
+	});/*data load function end*/
+	
+	/*click function on show button*/
 	$("#showData").click(function() {
 		display_var = $('#textYear').val();
 		display_var = parseInt(display_var);
-		// if(display_year != '' && (display_year > 1949 && display_year < 2017)){
 		if(allYears.includes(display_var)){
-			// display_year = +display_year;
 			display_year = +display_var;
-			//console.log("True case");
 			yearIndex = allYears.indexOf(display_var);
-			// display_year = allYears.indexOf(display_var);
 			generateVis();
 		}
 		else{
-			//console.log("False case");
 			alert("Enter year between: 1910, 1920, 1930, 1940, 1950 and 2016");
 		}
 	});
+	
+	/*click function on play pause button*/
 	$("#playPause").click(function() {
 		if($("#playPause").text() == "Play"){
-			//console.log('play')
 			$("#playPause").text("Pause");
-			// if(display_year < 1950 || display_year > 2015)
 			if(yearIndex > 71)
 			{
-				// display_year = 1950;
 				yearIndex = 0;
 				display_year = allYears[yearIndex];
 			}
 				generateVis();
 				yearInterval = setInterval(function() {
-					// display_year = display_year + 1;
 					display_year = allYears[yearIndex];
 					yearIndex = yearIndex + 1;
-					// if(display_year > 2015){
 					if(yearIndex > 71){
 						$("#playPause").text("Play");
 						clearInterval(yearInterval);
@@ -672,12 +622,13 @@ $(document).ready(function() {
 		}
 		
 	});
+	/*click on color change button*/
 	$("#colorChange").click(function(){
 		colorBlind();
 	});
-	
-	function colorBlind(){//console.log('change');
-		if(colorFlag == 0){//console.log('no');
+	/*color change function*/
+	function colorBlind(){
+		if(colorFlag == 0){
 			africaColor = '#00D5E9';
 			asiaColor = '#FF5872';
 			australiaColor = '#2E86C1';
@@ -690,7 +641,7 @@ $(document).ready(function() {
 			generateVis();
 			$("#colorChange").text("Colorblind Friendly");
 		}
-		else{//console.log('yes');
+		else{
 			africaColor = '#66C2A5';
 			asiaColor = '#FC8D62';
 			australiaColor = '#8DA0CB';
@@ -704,11 +655,13 @@ $(document).ready(function() {
 			$("#colorChange").text("Normal Colors");
 		}
 	}
+	/*function on change of select dropdown*/
 	$("#countryDrop").change(function(){
 		countryVal = $("#countryDrop").val();
 		console.log(countryVal);
 		changeCountryGenerateVis(countryVal);
 	});
+	/*click on clear button*/
 	$("#clearButton").click(function(){
 		$("#countryDrop option[value='All']").prop('selected', true);
 		generateVis();
